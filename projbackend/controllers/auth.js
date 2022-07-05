@@ -64,7 +64,8 @@ exports.signin = (req, res) => {
 
 // Controller for signout
 exports.signout = (req, res) => {
+  res.clearCookie("token")
   res.json({
-    message: "User signout",
+    message: "User signout sucessfully",
   });
 };
