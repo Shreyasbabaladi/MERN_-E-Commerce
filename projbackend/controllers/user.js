@@ -53,7 +53,7 @@ exports.userPuchaseList = (req, res) => {
 };
 
 //middalaware
-exports.pushOrderINPurchaseList = (req, res, next) => {
+exports.pushOrderInPurchaseList = (req, res, next) => {
   let purchases = [];
   req.body.Order.products.forEach((product) => {
     purchases.push({
