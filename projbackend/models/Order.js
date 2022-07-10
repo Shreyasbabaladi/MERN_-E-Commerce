@@ -4,16 +4,16 @@ const { ObjectId } = mongoose.Schema;
 const ProductCartSchema = new mongoose.Schema({
   product: {
     type: ObjectId,
-    ref: "Product",
-    name: String,
-    price: Number,
-    count: Number,
+    ref: "Product"
   },
+  name: String,
+  count: Number,
+  price: Number
 });
 
 const ProductCart = mongoose.model("ProductCart", ProductCartSchema);
 
-const orderSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
     products: [ProductCartSchema],
     transaction_id: {},
@@ -22,12 +22,12 @@ const orderSchema = new mongoose.Schema(
     updated: Date,
     user: {
       type: ObjectId,
-      ref: "User",
-    },
+      ref: "User"
+    }
   },
   { timestamps: true }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", OrderSchema);
 
-module.export = { ProductCart, Order };
+module.exports = { Order, ProductCart };
