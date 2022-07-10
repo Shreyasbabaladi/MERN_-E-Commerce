@@ -84,7 +84,7 @@ exports.isAuthenticated = (req, res, next) => {
       error: "ACCESS DENIED",
     });
   }
-
+  console.log("User is Authenticated");
   next();
 };
 
@@ -95,5 +95,6 @@ exports.isAdmin = (req, res, next) => {
       error: "You are not ADMIN"
     })
   }
+  console.log("User is Admin");
   next();
 };
