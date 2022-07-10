@@ -78,17 +78,17 @@ exports.photo = (req, res, next) => {
 };
 
 exports.deleteProduct = (res, req) => {
- let product = req.product;
- product.remove((err, product) =>{
-  if(err){
-    return res.send({
-      error: "Failed to Delete the product"
-    })
-  }
-  res.json({
-    message: "seccesfuly delete"
-  })
- });
+  let product = req.product;
+  product.remove((err, product) => {
+    if (err) {
+      return res.send({
+        error: "Failed to Delete the product",
+      });
+    }
+    res.json({
+      message: "seccesfuly delete",
+    });
+  });
 };
 
 exports.updateProduct = (res, req) => {
@@ -133,16 +133,37 @@ exports.getAllProduct = (req, res) => {
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
   Product.find()
-  .select(-photo)
-  .populate("category")
-  .limit(limit)
-  .sort([[sortBy, "asc"]])
-  .exec((err, products) => {
-    if(err){
+    .select(-photo)
+    .populate("category")
+    .limit(limit)
+    .sort([[sortBy, "asc"]])
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "No product FOUND",
+        });
+      }
+      res.json(products);
+    });
+};
+
+exports.updateStock = (req, res, next) => {
+  let myOperations = req.body.order.product.map((prod) => {
+    return {
+      updateOne: {
+        filter: { _id: [prod._id] },
+        update: { $inc: { stock: -prod.count, sold: +prod.count } },
+      },
+    };
+  });
+
+  Product.bulkWrite(myOperations, {}, (err, products) => {
+    if (err) {
       return res.status(400).json({
-        error: "No product FOUND"
-      })
+        error: "Bulk Operation failed",
+      });
     }
-    res.json(products)
-  })
-}
+
+    next();
+  });
+};
