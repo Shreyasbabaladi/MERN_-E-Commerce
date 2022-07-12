@@ -57,4 +57,6 @@ router.put(
   getAllProduct
 );
 
+router.get("/product/categories", getAllUniqueCategories)
+
 module.exports = router;
