@@ -8,7 +8,8 @@ const {
   photo,
   deleteProduct,
   updateProduct,
-  getAllProduct
+  getAllProduct,
+  getAllUniqueCategories
 } = require("../controllers/product");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 const { getUserById } = require("../controllers/user");
