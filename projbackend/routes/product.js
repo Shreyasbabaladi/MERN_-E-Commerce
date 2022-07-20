@@ -6,9 +6,9 @@ const {
   createProduct,
   getProduct,
   photo,
-  deleteProduct,
   updateProduct,
-  getAllProduct,
+  deleteProduct,
+  getAllProducts,
   getAllUniqueCategories
 } = require("../controllers/product");
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
@@ -19,7 +19,7 @@ router.param("userId", getUserById);
 router.param("productId", getProductById);
 
 //all of actual routes
-//create
+//create route
 router.post(
   "/product/create/:userId",
   isSignedIn,
@@ -28,9 +28,9 @@ router.post(
   createProduct
 );
 
-//read routes
+// read routes
 router.get("/product/:productId", getProduct);
-router.get("/photo/:productId", photo);
+router.get("/product/photo/:productId", photo);
 
 //delete route
 router.delete(
@@ -40,6 +40,7 @@ router.delete(
   isAdmin,
   deleteProduct
 );
+
 //update route
 router.put(
   "/product/:productId/:userId",
@@ -50,14 +51,8 @@ router.put(
 );
 
 //listing route
-router.put(
-  "/products",
-  isSignedIn,
-  isAuthenticated,
-  isAdmin,
-  getAllProduct
-);
+router.get("/products", getAllProducts);
 
-router.get("/product/categories", getAllUniqueCategories)
+router.get("/products/categories", getAllUniqueCategories);
 
 module.exports = router;
